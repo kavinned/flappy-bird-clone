@@ -27,11 +27,12 @@ body {
   position: absolute;
   top: 289px;
   left: 204.63px;
-  display: none;
+  display: block;
+  z-index: 999;
 }
 
 .scorePage {
-  display: none;
+  display: block;
 }
 
 .playerModel {
@@ -40,38 +41,56 @@ body {
   border: 1px solid black;
   width: 30px;
   height: 30px;
-  top: 400px;
-  left: 150px;
+  top: 300px;
+  left: 50px;
+  border-radius: 50%;
 }
 
 @keyframes scrollLeft {
   from {
-    transform: translateX(150px);
+    transform: translateX(600px);
   }
   to {
-    transform: translateX(-400px);
+    transform: translateX(-600px);
   }
 }
 
-.tube {
-  position: relative;
+#top {
   background-color: limegreen;
   width: 100px;
   z-index: 0;
   border: 1px solid darkgreen;
   left: 300px;
-  height: 1000px;
+  height: 300px;
+  position: relative;
 }
 
-.gap {
-  position: absolute;
+#bot {
+  background-color: limegreen;
+  width: 100px;
+  z-index: 0;
+  border: 1px solid darkgreen;
+  left: 300px;
+  height: 500px;
+  position: relative;
+}
+
+/* .gap {
   background: red;
   width: 100px;
   height: 200px;
   left: 300px;
-}
+} */
 
 .tubeContainer {
-  position: relative;
-  animation: 2s infinite linear scrollLeft;
+  display: flex;
+  position: absolute;
+  width: 500px;
+  flex-direction: column;
+  gap: 200px;
+}
+
+.anim {
+  animation: 4s infinite linear scrollLeft;
+  /* animation-delay: 300ms; */
 }
