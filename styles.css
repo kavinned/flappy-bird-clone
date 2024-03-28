@@ -91,6 +91,6 @@ body {
 }
 
 .anim {
-  animation: 4s infinite linear scrollLeft;
+  animation: 3.5s infinite linear scrollLeft;
   /* animation-delay: 300ms; */
 }

@@ -50,8 +50,14 @@ topTube.addEventListener("animationiteration", () => {
   score.innerText = `Score: ${scoreNum}`;
 });
 
-gameContainer.addEventListener("click", moveBird);
+// gameContainer.addEventListener("click", moveBird);
 
 startGame.addEventListener("click", () => {
   const gravityLoop = setInterval(start, 50);
+});
+
+window.addEventListener("keydown", (event) => {
+  if (event.code === "Space") {
+    moveBird();
+  }
 });
