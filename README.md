@@ -1,33 +1,29 @@
 # Flappy Bird
 
-### https://p1-flappy-bird.vercel.app/
----
-
-## I want to be able to start the game using a button. <br>
-
-## The model should jump whenever I click on the screen(?).<br>
-
-## There should be a score displayed when the game ends.<br>
-
-## There should be a reset button should I want to replay.
-
-## <img src=wireframe.drawio.svg>
+##### https://p1-flappy-bird.vercel.app/
 
 ---
 
-**Data:**<br>
-Player position <br>
-Game state <br>
-Score<br>
+#### Screenshots
 
-Click start<br>
-game state 1<br>
-gravity moves position of model down<br>
-click moves position of model up<br>
-start animation to scroll pipes across<br>
-randomize pipe heights<br>
-score + 1 after passing through pipe<br>
-game ends if collide with pipe, ground or ceiling<br>
-game state 2<br>
-display score page<br>
-reset button reset score, model position, pipe position<br>
+---
+
+#### Introduction
+
+This is a clone of the game 'Flappy Bird' utilizing HTML, CSS, and Javascript.
+This app was built fully utilizing the DOM.
+
+---
+
+#### Getting Started
+
+To play the game, either click anywhere within the game container or use the spacebar to make the bird jump.
+
+---
+
+#### Next Steps
+
+- Ability to pick the sprite to use as the player
+- Better animations such as animations for when the bird jumps and drops
+- Better implementation of randomizing and generating the tubes
+- Animate background and the ground
