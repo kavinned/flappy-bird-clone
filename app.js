@@ -10,13 +10,15 @@ const scorePage = document.querySelector(".scorePage");
 const tube = document.querySelector(".tubeContainer");
 const topTube = document.getElementById("top");
 const botTube = document.getElementById("bot");
+const gameOver = document.createElement("div");
 
 //* VARIABLES
 let moveUp = -50;
-let gravity = 8;
+let gravity = 80;
 let birdInitialTop = bird.offsetTop;
 let gameState = 0;
 let currentScore = 0;
+let gravityLoop;
 
 //* FUNCTIONS
 function start() {
@@ -54,21 +56,23 @@ function spaceKey(event) {
 }
 
 function showGameOver() {
-  const gameOver = document.createElement("div");
-  gameOver.classList.add("game-over");
-  gameContainer.appendChild(gameOver);
-  scorePage.style.display = "none";
-  setTimeout(() => {
-    gameOver.remove();
-    score.style.display = "block";
-    scorePage.style.top = 269.125 + "px";
-    scorePage.style.display = "block";
-    resetGame.style.display = "block";
-  }, 3000);
+  if (gameState === 2) {
+    gameOver.classList.add("game-over");
+    gameContainer.appendChild(gameOver);
+    scorePage.style.display = "none";
+    setTimeout(() => {
+      gameOver.remove();
+      score.style.display = "block";
+      scorePage.style.top = 269.125 + "px";
+      scorePage.style.display = "block";
+      resetGame.style.display = "block";
+    }, 3000);
+    clearInterval(gravityLoop);
+  }
 }
 //* EVENT LISTENERS
 startGame.addEventListener("click", () => {
-  const gravityLoop = setInterval(start, 50);
+  gravityLoop = setInterval(start, 50);
   gameContainer.addEventListener("click", moveBird);
   window.addEventListener("keydown", spaceKey);
 });
