@@ -2,8 +2,8 @@
 const gameContainer = document.querySelector(".container");
 const bird = document.querySelector(".playerModel");
 const ground = document.querySelector(".ground");
-const startGame = document.getElementById("start-game");
-const resetGame = document.getElementById("reset-game");
+const startButton = document.getElementById("start-game");
+const resetButton = document.getElementById("reset-game");
 const score = document.querySelector(".score");
 const scoreNum = document.querySelector(".scoreNum");
 const scorePage = document.querySelector(".scorePage");
@@ -14,7 +14,7 @@ const gameOver = document.createElement("div");
 
 //* VARIABLES
 let moveUp = -50;
-let gravity = 80;
+let gravity = 8;
 let birdInitialTop = bird.offsetTop;
 let gameState = 0;
 let currentScore = 0;
@@ -24,15 +24,15 @@ let gravityLoop;
 function start() {
   gameState = 1;
   score.style.display = "block";
-  startGame.style.display = "none";
+  scorePage.style.display = "block";
+  startButton.style.display = "none";
   topTube.classList.add("anim");
   botTube.classList.add("anim");
   birdInitialTop += gravity;
   bird.style.top = birdInitialTop + "px";
   if (birdInitialTop <= 0 || birdInitialTop >= 570) {
-    if (gameContainer.contains(tube)) {
-      gameContainer.removeChild(tube);
-    }
+    topTube.classList.remove("anim");
+    botTube.classList.remove("anim");
     gameState = 2;
     gravity = 0;
     birdInitialTop = bird.offsetTop;
@@ -65,13 +65,32 @@ function showGameOver() {
       score.style.display = "block";
       scorePage.style.top = 269.125 + "px";
       scorePage.style.display = "block";
-      resetGame.style.display = "block";
+      resetButton.style.display = "block";
     }, 3000);
     clearInterval(gravityLoop);
+  } else {
+    return;
   }
 }
+
+function resetGame() {
+  gameState = 0;
+  gravity = 8;
+  bird.style.top = 300 + "px";
+  bird.style.left = 50 + "px";
+  birdInitialTop = bird.offsetTop;
+  birdInitialTop += gravity;
+  bird.style.top = birdInitialTop + "px";
+  currentScore = 0;
+  scoreNum.innerText = `${currentScore}`;
+  startButton.style.display = "block";
+  scorePage.style.display = "none";
+  scorePage.style.top = 10 + "px";
+  resetButton.style.display = "none";
+}
+
 //* EVENT LISTENERS
-startGame.addEventListener("click", () => {
+startButton.addEventListener("click", () => {
   gravityLoop = setInterval(start, 50);
   gameContainer.addEventListener("click", moveBird);
   window.addEventListener("keydown", spaceKey);
@@ -83,3 +102,5 @@ topTube.addEventListener("animationiteration", () => {
   currentScore = currentScore + 1;
   scoreNum.innerText = `${currentScore}`;
 });
+
+resetButton.addEventListener("click", resetGame);
