@@ -8,18 +8,19 @@
   </head>
   <body>
     <div class="container">
-      <button type="button" id="start-game">Click to Start</button>
+      <button type="button" id="start-game"></button>
       <div class="playerModel"></div>
       <div class="tubeContainer">
         <div id="top"></div>
-        <!-- <div class="gap"></div> -->
         <div id="bot"></div>
       </div>
       <div class="ground"></div>
-    </div>
-    <div class="scorePage">
-      <h1 class="score">Score: 0</h1>
-      <button type="button" id="reset-game">Reset Game</button>
+      <div class="scorePage">
+        <h1 class="score">Score <span class="scoreNum">0</span></h1>
+        <button type="button" id="reset-game">
+          <strong>Reset Game</strong>
+        </button>
+      </div>
     </div>
     <script src="app.js"></script>
   </body>

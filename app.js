@@ -1,21 +1,27 @@
+//* CONSTANTS
 const gameContainer = document.querySelector(".container");
 const bird = document.querySelector(".playerModel");
 const ground = document.querySelector(".ground");
 const startGame = document.getElementById("start-game");
 const resetGame = document.getElementById("reset-game");
 const score = document.querySelector(".score");
+const scoreNum = document.querySelector(".scoreNum");
 const scorePage = document.querySelector(".scorePage");
 const tube = document.querySelector(".tubeContainer");
 const gap = document.querySelector(".gap");
 const topTube = document.getElementById("top");
 const botTube = document.getElementById("bot");
 
+//* VARIABLES
 let moveUp = -50;
-let gravity = 6.5;
+let gravity = 8;
 let birdInitialTop = bird.offsetTop;
 let gameState = 0;
+let currentScore = 0;
 
+//* FUNCTIONS
 function start() {
+  score.style.display = "block";
   startGame.style.display = "none";
   topTube.classList.add("anim");
   botTube.classList.add("anim");
@@ -23,15 +29,17 @@ function start() {
   birdInitialTop += gravity;
   bird.style.top = birdInitialTop + "px";
   if (birdInitialTop <= 0 || birdInitialTop >= 570) {
-    gameContainer.removeChild(tube);
+    if (gameContainer.contains(tube)) {
+      gameContainer.removeChild(tube);
+    } else {
+      return 0;
+    }
     gameState = 2;
     gravity = 0;
     birdInitialTop = bird.offsetTop;
     gameContainer.removeEventListener("click", moveBird);
-  }
-  if (gameState === 2) {
-    // scorePage.style.display = "block";
-    scorePage.style.zIndex = 1;
+    window.removeEventListener("keydown", spaceKey);
+    showGameOver();
   }
   return gameState;
 }
@@ -42,22 +50,35 @@ function moveBird() {
   bird.style.top = currentTop + "px";
 }
 
-let scoreNum = 0;
-topTube.addEventListener("animationiteration", () => {
-  let randomNum = Math.random() * (400 - 100) + 100;
-  topTube.style.height = randomNum + "px";
-  scoreNum = scoreNum + 1;
-  score.innerText = `Score: ${scoreNum}`;
-});
-
-// gameContainer.addEventListener("click", moveBird);
-
-startGame.addEventListener("click", () => {
-  const gravityLoop = setInterval(start, 50);
-});
-
-window.addEventListener("keydown", (event) => {
+function spaceKey(event) {
   if (event.code === "Space") {
     moveBird();
   }
+}
+
+function showGameOver() {
+  const gameOver = document.createElement("div");
+  gameOver.classList.add("game-over");
+  gameContainer.appendChild(gameOver);
+  scorePage.style.display = "none";
+  setTimeout(() => {
+    gameOver.remove();
+    score.style.display = "block";
+    scorePage.style.top = 269.125 + "px";
+    scorePage.style.display = "block";
+    resetGame.style.display = "block";
+  }, 3000);
+}
+//* EVENT LISTENERS
+startGame.addEventListener("click", () => {
+  const gravityLoop = setInterval(start, 50);
+  gameContainer.addEventListener("click", moveBird);
+  window.addEventListener("keydown", spaceKey);
+});
+
+topTube.addEventListener("animationiteration", () => {
+  let randomNum = Math.random() * (400 - 100) + 100;
+  topTube.style.height = randomNum + "px";
+  currentScore = currentScore + 1;
+  scoreNum.innerText = `${currentScore}`;
 });
