@@ -14,7 +14,7 @@ const gameOver = document.createElement("div");
 
 //* VARIABLES
 let moveUp = -50;
-let gravity = 80;
+let gravity = 8;
 let birdInitialTop = bird.offsetTop;
 let gameState = 0;
 let currentScore = 0;
