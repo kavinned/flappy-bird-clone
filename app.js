@@ -8,7 +8,6 @@ const score = document.querySelector(".score");
 const scoreNum = document.querySelector(".scoreNum");
 const scorePage = document.querySelector(".scorePage");
 const tube = document.querySelector(".tubeContainer");
-const gap = document.querySelector(".gap");
 const topTube = document.getElementById("top");
 const botTube = document.getElementById("bot");
 
@@ -21,18 +20,16 @@ let currentScore = 0;
 
 //* FUNCTIONS
 function start() {
+  gameState = 1;
   score.style.display = "block";
   startGame.style.display = "none";
   topTube.classList.add("anim");
   botTube.classList.add("anim");
-  gameState = 1;
   birdInitialTop += gravity;
   bird.style.top = birdInitialTop + "px";
   if (birdInitialTop <= 0 || birdInitialTop >= 570) {
     if (gameContainer.contains(tube)) {
       gameContainer.removeChild(tube);
-    } else {
-      return 0;
     }
     gameState = 2;
     gravity = 0;
