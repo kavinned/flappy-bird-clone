@@ -38,7 +38,7 @@ body {
   overflow: hidden;
   z-index: 999;
   background-image: url(./assets/sprites/background-day.png);
-  box-shadow: 20px 15px 5px black;
+  box-shadow: 20px 15px 5px rgba(0, 104, 145, 0.65);
 }
 
 #start-game {
@@ -105,7 +105,7 @@ body {
 }
 
 .tubeContainer {
-  display: flex;
+  display: none;
   position: absolute;
   width: 500px;
   flex-direction: column;
@@ -124,8 +124,8 @@ body {
   height: 300px;
   position: relative;
   background-image: url(./assets/sprites/pipe-green180.png);
-  background-size: contain;
   background-size: 100px 100%;
+  margin: 0;
 }
 
 #bot {
@@ -135,7 +135,8 @@ body {
   height: 500px;
   position: relative;
   background-image: url(./assets/sprites/pipe-green.png);
-  background-size: cover;
+  background-size: 100px 100%;
+  margin: 0;
 }
 
 .game-over {

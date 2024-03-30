@@ -13,7 +13,7 @@ const botTube = document.getElementById("bot");
 const gameOver = document.createElement("div");
 
 //* VARIABLES
-let moveUp = -50;
+let moveUp = -60;
 let gravity = 8;
 let birdInitialTop = bird.offsetTop;
 let gameState = 0;
@@ -23,6 +23,7 @@ let gravityLoop;
 //* FUNCTIONS
 function start() {
   gameState = 1;
+  tube.style.display = "flex";
   score.style.display = "block";
   scorePage.style.display = "block";
   startButton.style.display = "none";
