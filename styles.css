@@ -90,6 +90,7 @@ body {
   background-image: url(./assets/sprites/yellowbird-midflap.png);
   background-repeat: no-repeat;
   background-size: contain;
+  z-index: 1;
 }
 
 .ground {
@@ -100,7 +101,7 @@ body {
   height: 100px;
   position: absolute;
   top: 600px;
-  z-index: 0;
+  z-index: 1;
 }
 
 .tubeContainer {
@@ -112,23 +113,24 @@ body {
 }
 
 .anim {
-  animation: 3.5s infinite linear scrollLeft;
+  animation: 3s infinite linear scrollLeft;
+  animation-play-state: paused;
 }
 
 #top {
   width: 100px;
-  z-index: 0;
+  z-index: 1;
   left: 300px;
   height: 300px;
   position: relative;
   background-image: url(./assets/sprites/pipe-green180.png);
-  background-size: cover;
+  background-size: contain;
   background-size: 100px 100%;
 }
 
 #bot {
   width: 100px;
-  z-index: 0;
+  z-index: 1;
   left: 300px;
   height: 500px;
   position: relative;

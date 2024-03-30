@@ -26,19 +26,15 @@ function start() {
   score.style.display = "block";
   scorePage.style.display = "block";
   startButton.style.display = "none";
-  topTube.classList.add("anim");
-  botTube.classList.add("anim");
+  topTube.style.animation = "";
+  botTube.style.animation = "";
+  topTube.style.animationPlayState = "running";
+  botTube.style.animationPlayState = "running";
   birdInitialTop += gravity;
   bird.style.top = birdInitialTop + "px";
+  checkCollision();
   if (birdInitialTop <= 0 || birdInitialTop >= 570) {
-    topTube.classList.remove("anim");
-    botTube.classList.remove("anim");
-    gameState = 2;
-    gravity = 0;
-    birdInitialTop = bird.offsetTop;
-    gameContainer.removeEventListener("click", moveBird);
-    window.removeEventListener("keydown", spaceKey);
-    showGameOver();
+    endGame();
   }
   return gameState;
 }
@@ -47,19 +43,57 @@ function moveBird() {
   let currentTop = bird.offsetTop;
   birdInitialTop += moveUp;
   bird.style.top = currentTop + "px";
+  const audio = new Audio("./assets/audio/wing.wav");
+  audio.play();
+}
+
+function checkCollision() {
+  const topTubeBounds = topTube.getBoundingClientRect();
+  const botTubeBounds = botTube.getBoundingClientRect();
+  const birdBounds = bird.getBoundingClientRect();
+  if (
+    (birdBounds.right > topTubeBounds.left &&
+      birdBounds.left < topTubeBounds.right &&
+      birdBounds.bottom > topTubeBounds.top &&
+      birdBounds.top < topTubeBounds.bottom) ||
+    (birdBounds.right > botTubeBounds.left &&
+      birdBounds.left < botTubeBounds.right &&
+      birdBounds.bottom > botTubeBounds.top &&
+      birdBounds.top < botTubeBounds.bottom)
+  ) {
+    endGame();
+  }
+}
+
+function endGame() {
+  topTube.style.animationPlayState = "paused";
+  botTube.style.animationPlayState = "paused";
+  gameState = 2;
+  gravity = 0;
+  birdInitialTop = bird.offsetTop;
+  const audio = new Audio("./assets/audio/hit.wav");
+  audio.play();
+  gameContainer.removeEventListener("click", moveBird);
+  window.removeEventListener("keydown", spaceKey);
+  showGameOver();
 }
 
 function spaceKey(event) {
   if (event.code === "Space") {
     moveBird();
+    checkCollision();
   }
 }
 
 function showGameOver() {
   if (gameState === 2) {
-    gameOver.classList.add("game-over");
-    gameContainer.appendChild(gameOver);
     scorePage.style.display = "none";
+    setTimeout(() => {
+      gameOver.classList.add("game-over");
+      gameContainer.appendChild(gameOver);
+      const audio = new Audio("./assets/audio/die.wav");
+      audio.play();
+    }, 1000);
     setTimeout(() => {
       gameOver.remove();
       score.style.display = "block";
@@ -87,10 +121,16 @@ function resetGame() {
   scorePage.style.display = "none";
   scorePage.style.top = 10 + "px";
   resetButton.style.display = "none";
+  topTube.style.animation = "none";
+  botTube.style.animation = "none";
+  const audio = new Audio("./assets/audio/swoosh.wav");
+  audio.play();
 }
 
 //* EVENT LISTENERS
 startButton.addEventListener("click", () => {
+  topTube.classList.add("anim");
+  botTube.classList.add("anim");
   gravityLoop = setInterval(start, 50);
   gameContainer.addEventListener("click", moveBird);
   window.addEventListener("keydown", spaceKey);
@@ -101,6 +141,8 @@ topTube.addEventListener("animationiteration", () => {
   topTube.style.height = randomNum + "px";
   currentScore = currentScore + 1;
   scoreNum.innerText = `${currentScore}`;
+  const audio = new Audio("./assets/audio/point.wav");
+  audio.play();
 });
 
 resetButton.addEventListener("click", resetGame);
