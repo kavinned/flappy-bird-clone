@@ -7,6 +7,15 @@
   }
 }
 
+@keyframes scroll {
+  from {
+    background-position: 0;
+  }
+  to {
+    background-position: -500px;
+  }
+}
+
 @font-face {
   font-family: FlappyBird;
   src: url(./assets/font/04B_19__.TTF);
@@ -24,8 +33,16 @@ body {
   width: 100vw;
   display: grid;
   place-items: center;
+
+  margin: 0;
+}
+
+.bg {
   background-image: url(./assets/background.png);
-  background-size: cover;
+  background-size: 100% 100%;
+  animation: 4s linear infinite scroll;
+  height: 100%;
+  width: 100%;
   margin: 0;
 }
 
@@ -37,8 +54,17 @@ body {
   background: #b0dbff;
   overflow: hidden;
   z-index: 999;
-  background-image: url(./assets/sprites/background-day.png);
+
   box-shadow: 20px 15px 5px rgba(0, 104, 145, 0.65);
+}
+
+.containerbg {
+  background-size: 100% 100%;
+  animation: 4s linear infinite scroll;
+  width: 500px;
+  height: 700px;
+  background-image: url(./assets/sprites/background-day.png);
+  z-index: -999;
 }
 
 #start-game {
