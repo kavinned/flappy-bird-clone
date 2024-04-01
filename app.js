@@ -91,7 +91,7 @@ function showGameOver() {
     scorePage.style.display = "none";
     setTimeout(() => {
       gameOver.classList.add("game-over");
-      gameContainer.appendChild(gameOver);
+      gameContainer.insertBefore(gameOver, scorePage);
       const audio = new Audio("./assets/audio/die.wav");
       audio.play();
     }, 1000);

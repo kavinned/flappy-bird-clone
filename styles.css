@@ -64,7 +64,7 @@ body {
   width: 500px;
   height: 700px;
   background-image: url(./assets/sprites/background-day.png);
-  z-index: -999;
+  z-index: 0;
 }
 
 #start-game {
