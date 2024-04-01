@@ -124,7 +124,8 @@ body {
   height: 300px;
   position: relative;
   background-image: url(./assets/sprites/pipe-green180.png);
-  background-size: 100px 100%;
+  background-size: cover;
+  background-position: bottom;
   margin: 0;
 }
 
@@ -135,7 +136,8 @@ body {
   height: 500px;
   position: relative;
   background-image: url(./assets/sprites/pipe-green.png);
-  background-size: 100px 100%;
+  background-size: cover;
+  background-position: top;
   margin: 0;
 }
 
