@@ -20,6 +20,7 @@ let birdInitialTop = bird.offsetTop;
 let gameState = 0;
 let currentScore = 0;
 let gravityLoop;
+let scoreUpdated = false;
 
 //* FUNCTIONS
 function start() {
@@ -56,6 +57,14 @@ function checkCollision() {
 	const topTubeBounds = topTube.getBoundingClientRect();
 	const botTubeBounds = botTube.getBoundingClientRect();
 	const birdBounds = bird.getBoundingClientRect();
+	if (scoreUpdated === false && birdBounds.right > topTubeBounds.left + 100) {
+		currentScore += 1;
+		scoreNum.innerText = `${currentScore}`;
+		scoreUpdated = true;
+		const audio = new Audio("./assets/audio/point.wav");
+		audio.volume = 0.2;
+		audio.play();
+	}
 	if (
 		(birdBounds.right > topTubeBounds.left &&
 			birdBounds.left < topTubeBounds.right &&
@@ -104,8 +113,6 @@ function showGameOver() {
 		clearInterval(gravityLoop);
 	} else {
 		return;
-
-		
 	}
 }
 
@@ -133,7 +140,6 @@ function resetGame() {
 function spaceKey(event) {
 	if (event.code === "Space") {
 		moveBird();
-		checkCollision();
 	}
 }
 
@@ -147,13 +153,9 @@ startButton.addEventListener("click", () => {
 });
 
 topTube.addEventListener("animationiteration", () => {
+	scoreUpdated = false;
 	let randomNum = Math.random() * (400 - 100) + 100;
 	topTube.style.height = randomNum + "px";
-	currentScore = currentScore + 1;
-	scoreNum.innerText = `${currentScore}`;
-	const audio = new Audio("./assets/audio/point.wav");
-	audio.volume = 0.2;
-	audio.play();
 });
 
 resetButton.addEventListener("click", resetGame);
