@@ -204,3 +204,17 @@ body {
 	background-repeat: no-repeat;
 	background-position: center;
 }
+
+@media screen and (max-width: 500px) {
+	.container {
+		transform: scale(0.75);
+		background-size: cover
+	}
+}
+
+@media screen and (max-width: 300px) {
+	.container {
+		transform: scale(0.5);
+		background-size: cover
+	}
+}
