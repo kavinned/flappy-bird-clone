@@ -23,6 +23,14 @@ let scoreUpdated = false;
 //* FUNCTIONS
 //initialize and start game loop
 function setupGame() {
+	gameState = 1;
+	tube.style.display = "flex";
+	score.style.display = "block";
+	scorePage.style.display = "block";
+	startButton.style.display = "none";
+	topTube.style.animation = "";
+	botTube.style.animation = "";
+	animationState("running");
 	topTube.classList.add("anim");
 	botTube.classList.add("anim");
 	gravityLoop = setInterval(startGame, 50);
@@ -44,14 +52,6 @@ function animationState(state) {
 }
 //game loop logic
 function startGame() {
-	gameState = 1;
-	tube.style.display = "flex";
-	score.style.display = "block";
-	scorePage.style.display = "block";
-	startButton.style.display = "none";
-	topTube.style.animation = "";
-	botTube.style.animation = "";
-	animationState("running");
 	birdInitialTop += gravity;
 	bird.style.top = birdInitialTop + "px";
 	checkCollision();
