@@ -56,6 +56,7 @@ function startGame() {
 	bird.style.top = birdInitialTop + "px";
 	checkCollision();
 	updateScore();
+	winGame();
 	if (birdInitialTop <= 0 || birdInitialTop >= 570) {
 		endGame();
 	}
@@ -98,18 +99,22 @@ function checkCollision() {
 			birdBounds.left < botTubeBounds.right &&
 			birdBounds.bottom > botTubeBounds.top)
 	) {
-		endGame();
+		loseGame();
 	}
 }
 //end game and show game over screen
-function endGame() {
+function stopGame() {
 	animationState("paused");
 	gameState = 2;
 	gravity = 0;
 	birdInitialTop = bird.offsetTop;
-	playAudio("./assets/audio/hit.wav");
 	gameContainer.removeEventListener("click", moveBird);
 	window.removeEventListener("keydown", spaceKey);
+}
+
+function loseGame() {
+	stopGame();
+	playAudio("./assets/audio/hit.wav");
 	showGameOver();
 }
 //game over screen logic
@@ -132,6 +137,13 @@ function showGameOver() {
 	} else {
 		return;
 	}
+}
+
+function winGame() {
+	if (currentScore === 10) {
+		stopGame();
+	}
+	return;
 }
 //reset game logic
 function resetPosition() {
