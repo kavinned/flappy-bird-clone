@@ -12,6 +12,7 @@ const resetButton = document.getElementById("reset-game");
 const topTube = document.getElementById("top");
 const botTube = document.getElementById("bot");
 const gameOver = document.createElement("div");
+
 //* VARIABLES
 let moveUp = -60;
 let gravity = 8;
@@ -20,6 +21,7 @@ let gameState = 0;
 let currentScore = 0;
 let gravityLoop;
 let scoreUpdated = false;
+
 //* FUNCTIONS
 //initialize and start game loop
 function setupGame() {
@@ -57,9 +59,6 @@ function startGame() {
 	checkCollision();
 	updateScore();
 	winGame();
-	if (birdInitialTop <= 0 || birdInitialTop >= 570) {
-		endGame();
-	}
 	return gameState;
 }
 //change tube height
@@ -97,7 +96,9 @@ function checkCollision() {
 			birdBounds.top < topTubeBounds.bottom) ||
 		(birdBounds.right > botTubeBounds.left &&
 			birdBounds.left < botTubeBounds.right &&
-			birdBounds.bottom > botTubeBounds.top)
+			birdBounds.bottom > botTubeBounds.top) ||
+		birdInitialTop <= 0 ||
+		birdInitialTop >= 570
 	) {
 		loseGame();
 	}
@@ -178,6 +179,7 @@ function spaceKey(event) {
 		moveBird();
 	}
 }
+
 //* EVENT LISTENERS
 //setup game on clicking start
 startButton.addEventListener("click", setupGame);
