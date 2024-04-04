@@ -93,12 +93,10 @@ function checkCollision() {
 	if (
 		(birdBounds.right > topTubeBounds.left &&
 			birdBounds.left < topTubeBounds.right &&
-			birdBounds.bottom > topTubeBounds.top &&
 			birdBounds.top < topTubeBounds.bottom) ||
 		(birdBounds.right > botTubeBounds.left &&
 			birdBounds.left < botTubeBounds.right &&
-			birdBounds.bottom > botTubeBounds.top &&
-			birdBounds.top < botTubeBounds.bottom)
+			birdBounds.bottom > botTubeBounds.top)
 	) {
 		endGame();
 	}
