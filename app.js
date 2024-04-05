@@ -1,4 +1,3 @@
-//* CONSTANTS
 const gameContainer = document.querySelector(".container");
 const bird = document.querySelector(".playerModel");
 const ground = document.querySelector(".ground");
@@ -12,8 +11,8 @@ const resetButton = document.getElementById("reset-game");
 const topTube = document.getElementById("top");
 const botTube = document.getElementById("bot");
 const gameOver = document.createElement("div");
+const winScreen = document.createElement("div");
 
-//* VARIABLES
 let moveUp = -60;
 let gravity = 8;
 let birdInitialTop = bird.offsetTop;
@@ -22,8 +21,6 @@ let currentScore = 0;
 let gravityLoop;
 let scoreUpdated = false;
 
-//* FUNCTIONS
-//initialize and start game loop
 function setupGame() {
 	gameState = 1;
 	tube.style.display = "flex";
@@ -39,20 +36,20 @@ function setupGame() {
 	gameContainer.addEventListener("click", moveBird);
 	window.addEventListener("keydown", spaceKey);
 }
-//audio playing logic
+
 function playAudio(path) {
 	const audio = new Audio(path);
 	audio.volume = 0.2;
 	audio.play();
 }
-//change animation state
+
 function animationState(state) {
 	topTube.style.animationPlayState = state;
 	botTube.style.animationPlayState = state;
 	ground.style.animationPlayState = state;
 	containerBg.style.animationPlayState = state;
 }
-//game loop logic
+
 function startGame() {
 	birdInitialTop += gravity;
 	bird.style.top = birdInitialTop + "px";
@@ -61,20 +58,20 @@ function startGame() {
 	winGame();
 	return gameState;
 }
-//change tube height
+
 function heightChanger() {
 	scoreUpdated = false;
 	let randomNum = Math.random() * (400 - 100) + 100;
 	topTube.style.height = randomNum + "px";
 }
-//move bird position
+
 function moveBird() {
 	let currentTop = bird.offsetTop;
 	birdInitialTop += moveUp;
 	bird.style.top = currentTop + "px";
 	playAudio("./assets/audio/wing.wav");
 }
-//update score logic
+
 function updateScore() {
 	const topTubeBounds = topTube.getBoundingClientRect();
 	const birdBounds = bird.getBoundingClientRect();
@@ -85,7 +82,7 @@ function updateScore() {
 		playAudio("./assets/audio/point.wav");
 	}
 }
-//collision checking logic
+
 function checkCollision() {
 	const topTubeBounds = topTube.getBoundingClientRect();
 	const botTubeBounds = botTube.getBoundingClientRect();
@@ -103,7 +100,7 @@ function checkCollision() {
 		loseGame();
 	}
 }
-//end game and show game over screen
+
 function stopGame() {
 	animationState("paused");
 	gameState = 2;
@@ -117,36 +114,56 @@ function loseGame() {
 	stopGame();
 	playAudio("./assets/audio/hit.wav");
 	showGameOver();
-}
-//game over screen logic
-function showGameOver() {
-	if (gameState === 2) {
-		scorePage.style.display = "none";
-		setTimeout(() => {
-			gameOver.classList.add("game-over");
-			gameContainer.insertBefore(gameOver, scorePage);
-			playAudio("./assets/audio/die.wav");
-		}, 1000);
-		setTimeout(() => {
-			gameOver.remove();
-			score.style.display = "block";
-			scorePage.style.top = 269.125 + "px";
-			scorePage.style.display = "block";
-			resetButton.style.display = "block";
-		}, 3000);
-		clearInterval(gravityLoop);
-	} else {
-		return;
-	}
+	showResetScreen();
 }
 
 function winGame() {
-	if (currentScore === 10) {
+	let hasWon = false;
+	if (currentScore === 3 && hasWon === false) {
 		stopGame();
+		playAudio("./assets/audio/win.wav");
+		showWinScreen();
+		showResetScreen();
+		hasWon = true;
+		scoreUpdated = false;
 	}
-	return;
 }
-//reset game logic
+
+function showGameOver() {
+	scorePage.style.display = "none";
+	setTimeout(() => {
+		gameOver.classList.add("game-over");
+		gameContainer.insertBefore(gameOver, scorePage);
+		playAudio("./assets/audio/die.wav");
+	}, 1000);
+	setTimeout(() => {
+		gameOver.remove();
+	}, 3000);
+	clearInterval(gravityLoop);
+}
+
+function showWinScreen() {
+	scorePage.style.display = "none";
+	setTimeout(() => {
+		winScreen.classList.add("win-screen");
+		winScreen.innerText = "You Win!";
+		gameContainer.insertBefore(winScreen, scorePage);
+	}, 1000);
+	setTimeout(() => {
+		winScreen.remove();
+	}, 3000);
+	clearInterval(gravityLoop);
+}
+
+function showResetScreen() {
+	setTimeout(() => {
+		score.style.display = "block";
+		scorePage.style.top = 269.125 + "px";
+		scorePage.style.display = "block";
+		resetButton.style.display = "block";
+	}, 3000);
+}
+
 function resetPosition() {
 	bird.style.top = 300 + "px";
 	bird.style.left = 50 + "px";
@@ -173,17 +190,15 @@ function resetGame() {
 	resetState();
 	resetPosition();
 }
-//map space key to move the Qbird
+
 function spaceKey(event) {
 	if (event.code === "Space") {
 		moveBird();
 	}
 }
 
-//* EVENT LISTENERS
-//setup game on clicking start
 startButton.addEventListener("click", setupGame);
-//change height every animation iteration
+
 topTube.addEventListener("animationiteration", heightChanger);
-//reset game on clicking
+
 resetButton.addEventListener("click", resetGame);
