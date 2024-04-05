@@ -12,6 +12,7 @@ const topTube = document.getElementById("top");
 const botTube = document.getElementById("bot");
 const gameOver = document.createElement("div");
 const winScreen = document.createElement("div");
+const medal = document.createElement("img");
 
 let moveUp = -60;
 let gravity = 8;
@@ -119,7 +120,7 @@ function loseGame() {
 
 function winGame() {
 	let hasWon = false;
-	if (currentScore === 3 && hasWon === false) {
+	if (currentScore === 1 && hasWon === false) {
 		stopGame();
 		playAudio("./assets/audio/win.wav");
 		showWinScreen();
@@ -143,11 +144,13 @@ function showGameOver() {
 }
 
 function showWinScreen() {
+	medal.setAttribute("src", "./assets/sprites/medal.png");
 	scorePage.style.display = "none";
 	setTimeout(() => {
 		winScreen.classList.add("win-screen");
 		winScreen.innerText = "You Win!";
 		gameContainer.insertBefore(winScreen, scorePage);
+		winScreen.appendChild(medal);
 	}, 1000);
 	setTimeout(() => {
 		winScreen.remove();
