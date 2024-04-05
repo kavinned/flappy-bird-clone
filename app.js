@@ -38,9 +38,9 @@ function setupGame() {
 	window.addEventListener("keydown", spaceKey);
 }
 
-function playAudio(path) {
+function playAudio(path, volume) {
 	const audio = new Audio(path);
-	audio.volume = 0.2;
+	audio.volume = volume;
 	audio.play();
 }
 
@@ -70,7 +70,7 @@ function moveBird() {
 	let currentTop = bird.offsetTop;
 	birdInitialTop += moveUp;
 	bird.style.top = currentTop + "px";
-	playAudio("./assets/audio/wing.wav");
+	playAudio("./assets/audio/wing.wav", 0.2);
 }
 
 function updateScore() {
@@ -80,7 +80,7 @@ function updateScore() {
 		currentScore += 1;
 		scoreNum.innerText = `${currentScore}`;
 		scoreUpdated = true;
-		playAudio("./assets/audio/point.wav");
+		playAudio("./assets/audio/point.wav", 0.2);
 	}
 }
 
@@ -113,7 +113,7 @@ function stopGame() {
 
 function loseGame() {
 	stopGame();
-	playAudio("./assets/audio/hit.wav");
+	playAudio("./assets/audio/hit.wav", 0.2);
 	showGameOver();
 	showResetScreen();
 }
@@ -122,7 +122,6 @@ function winGame() {
 	let hasWon = false;
 	if (currentScore === 1 && hasWon === false) {
 		stopGame();
-		playAudio("./assets/audio/win.wav");
 		showWinScreen();
 		showResetScreen();
 		hasWon = true;
@@ -135,7 +134,7 @@ function showGameOver() {
 	setTimeout(() => {
 		gameOver.classList.add("game-over");
 		gameContainer.insertBefore(gameOver, scorePage);
-		playAudio("./assets/audio/die.wav");
+		playAudio("./assets/audio/die.wav", 0.2);
 	}, 1000);
 	setTimeout(() => {
 		gameOver.remove();
@@ -151,6 +150,7 @@ function showWinScreen() {
 		winScreen.innerText = "You Win!";
 		gameContainer.insertBefore(winScreen, scorePage);
 		winScreen.appendChild(medal);
+		playAudio("./assets/audio/win.mp3", 0.7);
 	}, 1000);
 	setTimeout(() => {
 		winScreen.remove();
@@ -186,7 +186,7 @@ function resetState() {
 	resetButton.style.display = "none";
 	topTube.style.animation = "none";
 	botTube.style.animation = "none";
-	playAudio("./assets/audio/swoosh.wav");
+	playAudio("./assets/audio/swoosh.wav", 0.4);
 }
 
 function resetGame() {
