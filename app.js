@@ -120,7 +120,7 @@ function loseGame() {
 
 function winGame() {
 	let hasWon = false;
-	if (currentScore === 10 && hasWon === false) {
+	if (currentScore === 3 && hasWon === false) {
 		stopGame();
 		showWinScreen();
 		showResetScreen();
