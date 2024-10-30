@@ -13,6 +13,7 @@ const botTube = document.getElementById("bot");
 const gameOver = document.createElement("div");
 const winScreen = document.createElement("div");
 const medal = document.createElement("img");
+let winCondition;
 
 let moveUp = -60;
 let gravity = 8;
@@ -23,6 +24,10 @@ let gravityLoop;
 let scoreUpdated = false;
 
 function setupGame() {
+	winCondition = prompt(
+		"Enter the number of points to win (default is 100): "
+	);
+	if (winCondition === null || winCondition === "") winCondition = 100;
 	gameState = 1;
 	tube.style.display = "flex";
 	score.style.display = "block";
@@ -120,7 +125,7 @@ function loseGame() {
 
 function winGame() {
 	let hasWon = false;
-	if (currentScore === 3 && hasWon === false) {
+	if (currentScore === parseInt(winCondition) && hasWon === false) {
 		stopGame();
 		showWinScreen();
 		showResetScreen();
